@@ -37,9 +37,45 @@ const main = async () => {
       },
     ]);
 
-    await db.insert(schema.lessons).values([
-      { id: 1, unitId: 1, order: 1, title: "Nouns" },
-      { id: 2, unitId: 1, order: 2, title: "Verbs" },
+    await db
+      .insert(schema.lessons)
+      .values([{ id: 1, unitId: 1, order: 1, title: "Nouns" }]);
+
+    await db.insert(schema.challenges).values([
+      {
+        id: 1,
+        lessonId: 1, // Nouns
+        type: "SELECT",
+        order: 1,
+        question: 'Which one of these is the "the man"?',
+      },
+    ]);
+
+    await db.insert(schema.challengeOptions).values([
+      {
+        id: 1,
+        challengeId: 1,
+        imageSrc: "/man.svg",
+        correct: true,
+        text: "el hombre",
+        audioSrc: "/es_man.mp3",
+      },
+      {
+        id: 2,
+        challengeId: 1, // Which one of these is "the woman" ?
+        imageSrc: "/woman.svg",
+        correct: false,
+        text: "la mujher",
+        audioSrc: "/es_woman.mp3",
+      },
+      {
+        id: 3,
+        challengeId: 1, // Which one of these is "the robot" ?
+        imageSrc: "/robot.svg",
+        correct: false,
+        text: "el robot",
+        audioSrc: "/es_robot.mp3",
+      },
     ]);
 
     console.log("Seeding finished");
