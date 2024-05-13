@@ -24,6 +24,13 @@ export const Quiz = ({
 }: Props) => {
   const [hearts, setHearts] = useState(initialHearts);
   const [percentage, setPercentage] = useState(initialHearts);
+  const [challenges] = useState(initialLessonChallenges);
+  const [activeIndex, setActiveIndex] = useState(() => {
+    const uncompletedIndex = challenges.findIndex(
+      (challenge) => !challenge.completed
+    );
+    return uncompletedIndex;
+  });
 
   return (
     <>
@@ -32,6 +39,16 @@ export const Quiz = ({
         percentage={percentage}
         hasActiveSubscription={!!userSubscription?.isActive}
       />
+      <div className="flex-1">
+        <div className="h-full flex items-center justify-center">
+          <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col gap-y-12">
+            <h1 className="text-lg lg:text-3xl text-center lg:text-start font-bold text-neutral-700">
+              Which of these is an apple?
+            </h1>
+            <div></div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
