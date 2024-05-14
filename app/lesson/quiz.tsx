@@ -1,18 +1,21 @@
 "use client";
 
-import { challengeOptions, challenges } from "@/db/schema";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import { useAudio, useWindowSize } from "react-use";
+import { toast } from "sonner";
+import Confetti from "react-confetti";
+
+import { reduceHearts } from "@/actions/user-progress";
+import { challengeOptions, challenges } from "@/db/schema";
+import { upsertChallengeProgress } from "@/actions/challenge-progress";
+
 import { Header } from "./header";
 import { QuestionBubble } from "./question-bubble";
 import { Challenge } from "./challenge";
 import { Footer } from "./footer";
-import { upsertChallengeProgress } from "@/actions/challenge-progress";
-import { toast } from "sonner";
-import { reduceHearts } from "@/actions/user-progress";
-import { useAudio } from "react-use";
-import Image from "next/image";
 import { ResultCard } from "./result-card";
-import { useRouter } from "next/navigation";
 
 type Props = {
   initialPercentage: number;
@@ -32,7 +35,9 @@ export const Quiz = ({
   initialLessonChallenges,
   userSubscription,
 }: Props) => {
+  const { width, height } = useWindowSize();
   const router = useRouter();
+  const [finishAudio] = useAudio({ src: "/finish.mp3", autoPlay: true });
   const [correctAudio, _c, correctControls] = useAudio({ src: "/correct.mp3" });
   const [incorrectAudio, _i, incorrectControls] = useAudio({
     src: "/incorrect.mp3",
@@ -127,9 +132,17 @@ export const Quiz = ({
     }
   };
 
-  if (true || !challenge) {
+  if (!challenge) {
     return (
       <>
+        {finishAudio}
+        <Confetti
+          width={width}
+          height={height}
+          recycle={false}
+          numberOfPieces={500}
+          tweenDuration={1000}
+        />
         <div className="flex flex-col gap-y-4 lg:gap-y-8 max-w-lg mx-auto text-center items-center justify-center h-full">
           <Image
             src="/finish.svg"
