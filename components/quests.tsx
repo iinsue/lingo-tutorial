@@ -28,14 +28,14 @@ export const Quests = ({ points }: Props) => {
             return (
               <div
                 key={quest.title}
-                className="flex items-center w-full p-4 gap-x-4"
+                className="flex items-center w-full pb-4 gap-x-3"
               >
-                <Image src="/points.svg" alt="Points" width={60} height={60} />
+                <Image src="/points.svg" alt="Points" width={40} height={40} />
                 <div className="flex flex-col gap-y-2 w-full">
-                  <p className="text-neutral-700 text-xl font-bold">
+                  <p className="text-neutral-700 text-sm font-bold">
                     {quest.title}
                   </p>
-                  <Progress value={progress} className="h-3" />
+                  <Progress value={progress} className="h-2" />
                 </div>
               </div>
             );
