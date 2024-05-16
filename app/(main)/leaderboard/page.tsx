@@ -11,6 +11,7 @@ import { FeedWrapper } from "@/components/feed-wrapper";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Promo } from "@/components/promo";
 
 const LeaderBoardPage = async () => {
   const userProgressData = getUserProgress();
@@ -39,6 +40,7 @@ const LeaderBoardPage = async () => {
             points={userProgress.points}
             hasActiveSubscription={isPro}
           />
+          {!isPro && <Promo />}
         </StickyWrapper>
         <FeedWrapper>
           <div className="w-full flex flex-col items-center">
